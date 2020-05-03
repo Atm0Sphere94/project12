@@ -1,9 +1,12 @@
 const express = require('express');
-const { PORT = 3000 } = process.env;
+const router = require('./routes/routes.js');
+
 const app = express();
+app.use('/', router);
+const { PORT = 3000 } = process.env;
 app.use(express.static('public'));
 
 app.listen(PORT, () => {
-    // Если всё работает, консоль покажет, какой порт приложение слушает
-    console.log(`App listening on port ${PORT}`)
-})
+  // eslint-disable-next-line no-console
+  console.log(`App listening on port ${PORT}`);
+});

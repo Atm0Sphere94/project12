@@ -4,7 +4,8 @@
   "description": "12 project work of YPraktikum.Backend-Base",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app.js"
+    "start": "node ./app.js",
+    "dev": "node ./app.js --mode development --open --watch"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2"
+    "eslint-plugin-import": "^2.20.2",
+    "express": "^4.17.1"
   }
 }
