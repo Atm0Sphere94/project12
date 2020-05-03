@@ -1,6 +1,7 @@
 const express = require('express');
-const { PORT = 3000 } ;
+const { PORT = 3000 } = process.env;
 const app = express();
+app.use(express.static('public'));
 
 app.listen(PORT, () => {
     // Если всё работает, консоль покажет, какой порт приложение слушает
