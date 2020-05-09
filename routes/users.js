@@ -1,24 +1,37 @@
 const router = require('express').Router();
-const bodyParser = require('body-parser');
-const { users } = require('../data/users.js');
+const path = require('path');
+const fs = require('fs');
 
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+
+async function readUsers() {
+  const usersPath = path.join(__dirname, '../data/users.json');
+  try {
+    const data = await fs.promises
+      .readFile(usersPath, { encoding: 'utf8' });
+    return JSON.parse(data);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    return console.error(error);
+  }
+}
 
 router.get('/users', (req, res) => {
-  res.send(users);
+  res.setHeader('Content-Type', 'application/json');
+  readUsers().then((data) => res.status(200).json(data));
 });
 
 router.get('/users/:_id', (req, res) => {
   // eslint-disable-next-line no-underscore-dangle
   const userID = req.params._id;
   // eslint-disable-next-line no-underscore-dangle
-  const userSend = users.find((m) => m._id === userID);
-  if (userSend) {
-    res.status(200).json({ userSend });
-  } else {
-    res.status(400).json({ message: 'Нет пользователя с таким id' });
-  }
+  readUsers().then((data) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const userInfo = data.filter((el) => el._id === userID)[0];
+    if (userInfo) {
+      res.status(200).json({ userInfo });
+    } else {
+      res.status(400).json({ message: 'Нет пользователя с таким id' });
+    }
+  });
 });
-
 module.exports = router;
