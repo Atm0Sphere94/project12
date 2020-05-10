@@ -22,7 +22,7 @@ router.get('/users', (req, res) => {
 
 router.get('/users/:_id', (req, res) => {
   // eslint-disable-next-line no-underscore-dangle
-  const userID = req.params._id;
+  const userID = req.params._id * 1;
   // eslint-disable-next-line no-underscore-dangle
   readUsers().then((data) => {
     // eslint-disable-next-line no-underscore-dangle
