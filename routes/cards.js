@@ -17,7 +17,13 @@ async function readCards() {
 
 router.get('/cards', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  readCards().then((data) => res.status(200).json(data));
+  readCards().then((data) => {
+    if (data) {
+      res.status(200).json({ data });
+    } else {
+      res.status(500).json({ message: 'JSON-файл невалиден или отсутствует' });
+    }
+  });
 });
 
 module.exports = router;

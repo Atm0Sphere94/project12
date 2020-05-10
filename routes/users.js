@@ -17,7 +17,13 @@ async function readUsers() {
 
 router.get('/users', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  readUsers().then((data) => res.status(200).json(data));
+  readUsers().then((data) => {
+    if (data) {
+      res.status(200).json({ data });
+    } else {
+      res.status(500).json({ message: 'JSON-файл невалиден или отсутствует' });
+    }
+  });
 });
 
 router.get('/users/:_id', (req, res) => {
@@ -30,7 +36,7 @@ router.get('/users/:_id', (req, res) => {
     if (userInfo) {
       res.status(200).json({ userInfo });
     } else {
-      res.status(400).json({ message: 'Нет пользователя с таким id' });
+      res.status(404).json({ message: 'Нет пользователя с таким id' });
     }
   });
 });
